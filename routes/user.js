@@ -2,7 +2,7 @@ import express from "express";
 
 const router = express.Router();
 
-/* GET users listing. */
+/* GET enviant missatge sol·licitat per l'exercici. */
 router.get('/', (req, res) => {
     res.json(
         {
