@@ -6,9 +6,9 @@ const router = express.Router();
 
 router.post('/', uploadMulter.single('file'), (req, res) => {
     if (req.file) {
-        res.json({message: 'File uploaded successfully'});
+        res.json({message: 'Arxiu pujat correctament'});
     } else {
-        res.json({message: 'File not uploaded'});
+        res.json({message: 'Error al pujar l\'arxiu'});
     }
 
 });
