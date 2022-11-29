@@ -1,23 +1,24 @@
-import multer from "multer";
 import path from "path";
 
 const __dirname = path.resolve();
 
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const pathStorage = `${__dirname}/uploads`;
-        cb(null, pathStorage);
-    },
-    filename: (req, file, cb) => {
-        const extension = file.originalname.split('.').pop();
-            const fileName = `${file.fieldname}-${Date.now()}.${extension}`;
-            cb(null, fileName);
+const uploadFile = (req, res) => {
+    if (!req.files) {
+        return res.status(400).send("No files were uploaded.");
     }
-});
 
+    const file = req.files.myFile;
+    const path = __dirname + "/uploads/" + file.name;
+    if (file.mimetype === "image/jpeg" || file.mimetype === "image/png" || file.mimetype === "image/gif") {
+        file.mv(path, (err) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            return res.send({status: "success", path: path});
+        });
+    } else {
+        return res.status(400).send("File type not supported.");
+    }
+};
 
-const uploadMulter = multer({storage});
-
-
-export default uploadMulter;
+export default uploadFile;

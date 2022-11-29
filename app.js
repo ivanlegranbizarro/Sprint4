@@ -3,8 +3,11 @@ import createError from "http-errors";
 import logger from "morgan";
 import usersRouter from "./routes/user.js";
 import uploadRouter from "./routes/upload.js";
+import fileUpload from "express-fileupload";
 
 const app = express();
+
+app.use(fileUpload());
 
 app.use(logger('dev'));
 app.use(express.json());
